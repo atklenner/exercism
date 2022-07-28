@@ -1,49 +1,18 @@
 # Score categories.
 # Change the values as you see fit.
-YACHT = "YACHT"
-ONES = "ONES"
-TWOS = "TWOS"
-THREES = "THREES"
-FOURS = "FOURS"
-FIVES = "FIVES"
-SIXES = "SIXES"
-FULL_HOUSE = "FULL_HOUSE"
-FOUR_OF_A_KIND = "FOUR_OF_A_KIND"
-LITTLE_STRAIGHT = "LITTLE_STRAIGHT"
-BIG_STRAIGHT = "BIG_STRAIGHT"
-CHOICE = "CHOICE"
+YACHT = lambda d: 50 if d.count(d[0]) == 5 else 0
+ONES = lambda d: d.count(1) * 1
+TWOS = lambda d: d.count(2) * 2
+THREES = lambda d: d.count(3) * 3
+FOURS = lambda d: d.count(4) * 4
+FIVES = lambda d: d.count(5) * 5
+SIXES = lambda d: d.count(6) * 6
+FULL_HOUSE = lambda d: sum(d) if len(set(d)) == 2 and any(d.count(x) == 2 for x in set(d)) else 0 
+FOUR_OF_A_KIND = lambda d: sum(x * 4 for x in set(d) if d.count(x) > 3)
+LITTLE_STRAIGHT = lambda d: 30 if sum(d) == 15 else 0
+BIG_STRAIGHT = lambda d: 30 if sum(d) == 20 else 0
+CHOICE = lambda d: sum(d)
 
 
 def score(dice, category):
-    dice.sort()
-    if category == "YACHT" and dice.count(dice[0]) == 5:
-        return 50
-    elif category == "ONES":
-        count = dice.count(1)
-        return count * 1
-    elif category == "TWOS":
-        count = dice.count(2)
-        return count * 2
-    elif category == "THREES":
-        count = dice.count(3)
-        return count * 3
-    elif category == "FOURS":
-        count = dice.count(4)
-        return count * 4
-    elif category == "FIVES":
-        count = dice.count(5)
-        return count * 5
-    elif category == "SIXES":
-        count = dice.count(6)
-        return count * 6
-    elif category == "FULL_HOUSE" and ((dice.count(dice[0]) == 2 and dice.count(dice[4]) == 3) or (dice.count(dice[0]) == 3 and dice.count(dice[4]) == 2)):
-        return sum(dice)
-    elif category == "FOUR_OF_A_KIND" and dice.count(dice[2]) >= 4:
-        return 4 * dice[2]
-    elif category == "LITTLE_STRAIGHT" and dice == [1,2,3,4,5]:
-        return 30
-    elif category == "BIG_STRAIGHT" and dice == [2,3,4,5,6]:
-        return 30
-    elif category == "CHOICE":
-        return sum(dice)
-    return 0
+    return category(dice)
