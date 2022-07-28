@@ -1,8 +1,8 @@
 def response(hey_bob):
-    formatted = hey_bob.strip(" \n\r\t")
-    if formatted == "":
+    formatted = hey_bob.strip()
+    if not formatted:
         return "Fine. Be that way!"
-    elif formatted[-1] == "?":
+    elif formatted.endswith("?"):
         if formatted.isupper():
             return "Calm down, I know what I'm doing!"
         return "Sure."
