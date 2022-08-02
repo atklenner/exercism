@@ -1,21 +1,24 @@
+codons = {"AUG": "Methionine", 
+          "UUU": "Phenylalanine", 
+          "UUC": "Phenylalanine", 
+          "UUA": "Leucine", 
+          "UUG": "Leucine", 
+          "UCU": "Serine",
+          "UCC": "Serine",
+          "UCA": "Serine",
+          "UCG": "Serine",
+          "UAU": "Tyrosine",
+          "UAC": "Tyrosine", 
+          "UGU": "Cysteine", 
+          "UGC": "Cysteine",
+          "UGG": "Tryptophan"}
+
 def proteins(strand):
-    protein = []
-    for i in range(len(strand) // 3):
-        codon = strand[3 * i:3 * i + 3]
-        if codon in ["AUG"]:
-            protein.append("Methionine")
-        elif codon in ["UUU", "UUC"]:
-            protein.append("Phenylalanine")
-        elif codon in ["UUA", "UUG"]:
-            protein.append("Leucine")
-        elif codon in ["UCU", "UCC", "UCA", "UCG"]:
-            protein.append("Serine")
-        elif codon in ["UAU", "UAC"]:
-            protein.append("Tyrosine")
-        elif codon in ["UGU", "UGC"]:
-            protein.append("Cysteine")
-        elif codon in ["UGG"]:
-            protein.append("Tryptophan")
+    protein_translation = []
+    split_strand = [strand[3 * i:3 * i + 3] for i in range(len(strand) // 3)]
+    for current_codon in split_strand:
+        if current_codon in codons.keys():
+            protein_translation.append(codons[current_codon])
         else:
             break
-    return protein
+    return protein_translation
